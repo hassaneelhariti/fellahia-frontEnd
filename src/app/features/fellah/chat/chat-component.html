@@ -1,1 +1,63 @@
-<p>chat-component works!</p>
+<main class="chat-main">
+  <header class="chat-header">
+    <div class="title-wrap">
+      <h2><i class="bi bi-robot"></i> المساعد القانوني الذكي</h2>
+      <p>اسأل عن حقوقك القانونية، مشاكل الأراضي، أو حقوق المياه...</p>
+    </div>
+    <button class="clear-btn" (click)="clearHistory()">
+      <i class="bi bi-trash3"></i> مسح السجل
+    </button>
+  </header>
+
+  <div class="messages-viewport" #messagesContainer>
+    @if (messages.length === 0) {
+      <div class="empty-state">
+        <div class="icon-box">🤖</div>
+        <h3>مرحباً بك!</h3>
+        <p>أنا مساعدك القانوني الذكي. كيف يمكنني مساعدتك في القوانين الزراعية المغربية اليوم؟</p>
+      </div>
+    }
+
+    @for (msg of messages; track msg.id) {
+      <div class="message-row" [class.user]="msg.role === 'user'" [class.assistant]="msg.role === 'assistant'">
+        <div class="avatar">
+          <i [class]="msg.role === 'user' ? 'bi bi-person-fill' : 'bi bi-robot'"></i>
+        </div>
+        <div class="bubble-wrap">
+          <div class="sender-name">{{ msg.role === 'user' ? 'أنت' : 'المساعد الذكي' }}</div>
+          <div class="bubble">
+            <div class="content">{{ msg.content }}</div>
+            <div class="time">{{ msg.createdAt | date:'shortTime' }}</div>
+          </div>
+        </div>
+      </div>
+    }
+
+    @if (loading) {
+      <div class="message-row assistant">
+        <div class="avatar"><i class="bi bi-robot"></i></div>
+        <div class="bubble loading-bubble">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="input-panel">
+    <div class="input-container">
+      <textarea
+        [(ngModel)]="inputMessage"
+        placeholder="اكتب سؤالك هنا..."
+        (keydown.enter)="onEnter($event)"
+        rows="1"
+      ></textarea>
+      <button class="send-btn" (click)="send()" [disabled]="!inputMessage.trim() || loading">
+        @if (loading) {
+          <span class="spinner-border spinner-border-sm"></span>
+        } @else {
+          <i class="bi bi-send-fill"></i>
+        }
+      </button>
+    </div>
+  </div>
+</main>
