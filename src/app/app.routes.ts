@@ -1,6 +1,11 @@
 import { Routes } from '@angular/router';
-import {LoginComponent} from './features/auth/login/login.component';
 
 export const routes: Routes = [
-  {path:'' , component:LoginComponent}
+  { path: '', redirectTo: 'auth/login', pathMatch: 'full' },
+  {
+    path: 'auth',
+    loadChildren: () => import('./features/auth/auth.routes').then(m => m.AUTH_ROUTES)
+  },
+
+
 ];

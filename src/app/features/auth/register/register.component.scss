@@ -1,0 +1,254 @@
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  font-family: 'Noto Sans Arabic', sans-serif;
+  direction: rtl;
+
+  .auth-container {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+  }
+
+  .hero-section {
+    flex: 1.2;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    padding: 60px;
+    text-align: center;
+    overflow: hidden;
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0.85;
+      z-index: 0;
+
+      &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+      }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      max-width: 480px;
+
+      .logo-box {
+        width: 80px;
+        height: 80px;
+        background: white;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 32px;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+
+        .material-symbols-outlined {
+          font-size: 2.5rem;
+          color: #ec5b13;
+        }
+      }
+
+      h2 {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 16px;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      p {
+        font-size: 1.25rem;
+        opacity: 0.9;
+        margin-bottom: 40px;
+      }
+
+      .hero-badges {
+        display: flex;
+        justify-content: center;
+        gap: 24px;
+
+        .hero-badge {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          opacity: 0.85;
+          font-size: 0.95rem;
+        }
+      }
+    }
+  }
+
+  .form-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    padding: 40px;
+  }
+
+  .form-content {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .form-header {
+    margin-bottom: 36px;
+
+    h2 {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 6px;
+    }
+
+    p {
+      color: #64748b;
+      font-size: 0.95rem;
+    }
+  }
+
+  .field {
+    margin-bottom: 20px;
+
+    label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #1e293b;
+    }
+
+    .input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+
+      input {
+        width: 100%;
+        padding: 12px 44px 12px 16px;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-family: inherit;
+        outline: none;
+        transition: border-color 0.2s;
+
+        &:focus {
+          border-color: #ec5b13;
+          box-shadow: 0 0 0 3px rgba(236, 91, 19, 0.1);
+        }
+      }
+
+      .input-icon {
+        position: absolute;
+        right: 12px;
+        color: #94a3b8;
+        font-size: 1.25rem;
+        pointer-events: none;
+      }
+    }
+  }
+
+  .role-group {
+    display: flex;
+    gap: 24px;
+
+    .role-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-size: 0.95rem;
+
+      input[type="radio"] {
+        accent-color: #ec5b13;
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .btn-primary {
+    width: 100%;
+    padding: 14px;
+    background: #ec5b13;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    font-family: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: background 0.2s, opacity 0.2s;
+
+    &:hover:not(:disabled) {
+      background: #d44e0e;
+    }
+
+    &:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+  }
+
+  .spinning {
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+
+  .error-msg {
+    color: #b91c1c;
+    font-size: 0.85rem;
+    margin-bottom: 16px;
+  }
+
+  .form-footer {
+    margin-top: 28px;
+    text-align: center;
+
+    p {
+      color: #64748b;
+      font-size: 0.95rem;
+    }
+
+    a {
+      font-weight: 700;
+      color: #ec5b13;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .hero-section {
+      display: none;
+    }
+
+    .auth-container {
+      flex-direction: column;
+    }
+  }
+}

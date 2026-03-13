@@ -1,1 +1,103 @@
-<p>register.component works!</p>
+<div class="auth-page">
+  <div class="auth-container">
+
+    <!-- Hero / decorative panel -->
+    <div class="hero-section">
+      <div class="hero-bg"
+           style="background-image:url('https://lh3.googleusercontent.com/aida-public/AB6AXuCyCNrLcH9P3D-oZGh2EcfvKPohDpGr9tHKdSRwtU5ZVAFJZdRZqg1Wo-0Wf2WMUSSOBwQSxPJfgvPieAit9r7282zSa-8xBILMjl_nQDojAmW-WkC4qVhcbH1xBDJvNTvIzLF1XKnM6oRwTNTHScDCxnti0RNvpCBcFy7hR8Ji5QntTkjOmAyRUejaiDUYrYeSVTJqS0RC_-qdH6JC96QARlbxRlP6vanzExF4pqvA8sjTMkX-l_a0hdlV0CkgRw2ztIYCFLpoq2bI')">
+      </div>
+
+      <div class="hero-content">
+        <div class="logo-box">
+          <span class="material-symbols-outlined">gavel</span>
+        </div>
+        <h2>انضم إلى مجتمع فلاحيا</h2>
+        <p>حلول قانونية وتقنية للفلاح المغربي</p>
+        <div class="hero-badges">
+          <div class="hero-badge">
+            <span class="material-symbols-outlined">verified_user</span>
+            <span>حماية قانونية</span>
+          </div>
+          <div class="hero-badge">
+            <span class="material-symbols-outlined">support_agent</span>
+            <span>دعم مستمر</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form panel -->
+    <div class="form-section">
+      <div class="form-content">
+
+        <div class="form-header">
+          <h2>إنشاء حساب جديد</h2>
+          <p>يرجى ملء البيانات أدناه للتسجيل</p>
+        </div>
+
+        <form [formGroup]="form" (ngSubmit)="submit()">
+
+          <div class="field">
+            <label>الاسم الكامل</label>
+            <div class="input-wrap">
+              <span class="material-symbols-outlined input-icon">person</span>
+              <input type="text" formControlName="fullName" placeholder="أدخل اسمك الكامل">
+            </div>
+          </div>
+
+          <div class="field">
+            <label>رقم الهاتف</label>
+            <div class="input-wrap">
+              <span class="material-symbols-outlined input-icon">call</span>
+              <input type="tel" formControlName="phone" placeholder="06XXXXXXXX" dir="ltr">
+            </div>
+          </div>
+
+          <div class="field">
+            <label>كلمة المرور</label>
+            <div class="input-wrap">
+              <span class="material-symbols-outlined input-icon">lock</span>
+              <input type="password" formControlName="password" placeholder="••••••••">
+            </div>
+          </div>
+
+          <div class="field">
+            <label>الدور</label>
+            <div class="role-group">
+              @for (role of roles; track role.value) {
+                <label class="role-option">
+                  <input type="radio" formControlName="role" [value]="role.value">
+                  <span>{{ role.label }}</span>
+                </label>
+              }
+            </div>
+          </div>
+
+          @if (error) {
+            <div class="error-msg">{{ error }}</div>
+          }
+
+          <button type="submit" class="btn-primary" [disabled]="loading || form.invalid">
+            @if (loading) {
+              <span class="material-symbols-outlined spinning">autorenew</span>
+              جاري التسجيل...
+            } @else {
+              <span>تسجيل</span>
+              <span class="material-symbols-outlined">arrow_back</span>
+            }
+          </button>
+
+        </form>
+
+        <div class="form-footer">
+          <p>
+            لديك حساب بالفعل؟
+            <a routerLink="/auth/login">سجل الدخول هنا</a>
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
