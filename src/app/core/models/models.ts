@@ -77,6 +77,7 @@ export interface UserProfileResponse {
   region?: string;
   rating?: number;
   totalCases?: number;
+  avatar?:string;
 }
 
 export interface LawyerDashboardResponse {
