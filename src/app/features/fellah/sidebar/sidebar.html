@@ -1,0 +1,48 @@
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-logo">
+      <i class="bi bi-flower1"></i>
+    </div>
+    <span class="brand-name">FellahIA</span>
+  </div>
+
+  <nav class="nav-menu">
+    <a routerLink="/fellah/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-item">
+      <i class="bi bi-grid-fill"></i>
+      <span>الرئيسية</span>
+    </a>
+    <a routerLink="/fellah/chat" routerLinkActive="active" class="nav-item">
+      <i class="bi bi-chat-dots-fill"></i>
+      <span>المساعد الذكي</span>
+    </a>
+    <a routerLink="/fellah/cases" routerLinkActive="active" class="nav-item">
+      <i class="bi bi-file-earmark-text-fill"></i>
+      <span>حالاتي السابقة</span>
+    </a>
+    <a routerLink="/fellah/settings" routerLinkActive="active" class="nav-item">
+      <i class="bi bi-gear-fill"></i>
+      <span>الإعدادات</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="user-profile">
+      <div class="avatar">
+        @if (store.profile()?.avatar) {
+          <img [src]="store.profile()!.avatar" alt="User" (error)="store.onAvatarError($event)">
+        } @else {
+          <div class="avatar-placeholder">
+            <i class="bi bi-person-fill"></i>
+          </div>
+        }
+      </div>
+      <div class="user-info">
+        <p class="user-name">{{ store.profile()?.fullName || 'أحمد العمراني' }}</p>
+        <p class="user-role">فلاح - {{ store.profile()?.region || 'سوس ماسة' }}</p>
+      </div>
+    </div>
+    <button class="btn-logout" (click)="logout()">
+      <i class="bi bi-box-arrow-right"></i>
+    </button>
+  </div>
+</aside>
