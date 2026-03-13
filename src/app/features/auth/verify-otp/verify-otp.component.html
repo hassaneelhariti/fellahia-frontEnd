@@ -1,1 +1,90 @@
-<p>verify-otp.component works!</p>
+<div class="otp-page">
+  <div class="otp-container">
+
+    <div class="hero-section">
+      <img
+        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOB-dOAsdQ70Gd9cY9AOOMKr2oaN_k3XZNiGrfo8pNeOCR1PSgWTpgHidKKjjGcz11Dzdiq12PSkTzu-14TgU8BiGhCv530eJWOvfo3PCgrwQIGS1KyIIFfV997G3or180Hi0KR0_zUB-B7syCkN5itGI5rU5y9OQsw0qSpTfcr20nt51S-c6FzdGWm4da2FMvEk6IuRhB8dMQpZ9KzlQI270zphxo8vrZ7EHXoAKQHVI-nXF3yw2Pyrn79nPC-qnYkiJApvhCVWi3"
+        alt="حقول زراعية مغربية"
+        class="hero-img"
+      />
+      <div class="hero-overlay">
+        <div class="hero-brand">
+          <div class="brand-icon">
+            <span class="material-symbols-outlined">agriculture</span>
+          </div>
+          <h1>FellahIA</h1>
+        </div>
+        <h2>مستقبلك الزراعي يبدأ هنا بذكاء وأمان.</h2>
+        <p>نحن نستخدم أحدث تقنيات الذكاء الاصطناعي لمساعدة الفلاح المغربي على تحسين محاصيله وزيادة إنتاجيته.</p>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-content">
+
+        <div class="mobile-brand">
+          <span class="material-symbols-outlined">agriculture</span>
+          <span>FellahIA</span>
+        </div>
+
+        <div class="form-header">
+          <h2>تأكيد رقم الهاتف</h2>
+          <p>لقد أرسلنا رمز التأكيد إلى رقم هاتفك. يرجى إدخاله أدناه للمتابعة.</p>
+        </div>
+
+        <form [formArray]="digits" (ngSubmit)="submit()">
+
+          <div class="otp-row" dir="ltr" (paste)="onPaste($event)">
+            @for (ctrl of digits.controls; track $index) {
+              <input
+                type="number"
+                class="otp-input"
+                maxlength="1"
+                placeholder="•"
+                [value]="ctrl.value"
+                (input)="onInput($event, $index)"
+                (keydown)="onKeydown($event, $index)"
+              />
+            }
+          </div>
+
+          @if (error) {
+            <div class="error-msg">{{ error }}</div>
+          }
+
+          <div class="actions">
+            <button type="submit" class="btn-primary" [disabled]="loading || otp.length !== 6">
+              @if (loading) {
+                <span class="material-symbols-outlined spinning">autorenew</span>
+                جاري التأكيد...
+              } @else {
+                تأكيد
+              }
+            </button>
+
+            <div class="resend-wrap">
+              <p>لم يصلك الرمز؟</p>
+              <button type="button" class="btn-resend" (click)="resend()" [disabled]="resendCooldown > 0 || resending">
+                @if (resendCooldown > 0) {
+                  إعادة الإرسال بعد {{ resendCooldown }}ث
+                } @else {
+                  إعادة إرسال الرمز
+                }
+              </button>
+            </div>
+          </div>
+
+        </form>
+
+        <div class="form-footer">
+          <span class="material-symbols-outlined">lock</span>
+          <span>تشفير آمن</span>
+          <span class="dot"></span>
+          <a routerLink="/support">اتصل بالدعم</a>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -29,9 +29,7 @@ export class AuthService {
   }
 
   register(body: RegisterRequest) {
-    return this.http.post<AuthResponse>(`${this.baseUrl}/register`, body).pipe(
-      tap(res => this.saveSession(res))
-    );
+    return this.http.post<AuthResponse>(`${this.baseUrl}/register`, body);
   }
 
   private saveSession(res: AuthResponse) {
@@ -42,7 +40,9 @@ export class AuthService {
   }
 
   verifyOtp(body: OtpVerifyRequest) {
-    return this.http.post(`${this.baseUrl}/verify-otp`, body);
+    return this.http.post<AuthResponse>(`${this.baseUrl}/verify-otp`, body).pipe(
+      tap(res => this.saveSession(res))  // ← move it here
+    );
   }
 
   resendOtp(phone: string) {
