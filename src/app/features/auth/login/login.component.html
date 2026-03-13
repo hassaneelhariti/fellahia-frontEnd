@@ -1,0 +1,100 @@
+<!-- login.html -->
+<div class="auth-page">
+  <div class="auth-container">
+    <!-- Hero Section (Left on Desktop) -->
+    <div class="hero-section">
+      <div class="hero-content">
+        <div class="logo-box">
+          <i class="bi bi-flower1"></i>
+        </div>
+        <h2>مرحباً بك مجدداً في فلاحيا</h2>
+        <p>حلول قانونية وتقنية متكاملة للمزارع المغربي</p>
+        <div class="hero-badges">
+          <div class="badge">
+            <i class="bi bi-shield-check"></i>
+            <span>حماية قانونية</span>
+          </div>
+          <div class="badge">
+            <i class="bi bi-headset"></i>
+            <span>دعم مستمر</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Section (Right on Desktop) -->
+    <div class="form-section">
+      <div class="form-content">
+        <div class="form-header">
+          <h1>تسجيل الدخول</h1>
+          <p>يرجى إدخال بياناتك للوصول إلى حسابك</p>
+        </div>
+
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          <!-- Phone Field -->
+          <div class="field">
+            <label>رقم الهاتف</label>
+            <div class="input-wrap">
+              <i class="bi bi-telephone input-icon"></i>
+              <input
+                type="tel"
+                formControlName="phone"
+                placeholder="+212 6XX XXX XXX"
+                dir="ltr"
+              />
+            </div>
+          </div>
+
+          <!-- Password Field -->
+          <div class="field">
+            <div class="field-header">
+              <label>كلمة المرور</label>
+              <a href="#" class="forgot-link">هل نسيت كلمة السر؟</a>
+            </div>
+            <div class="input-wrap">
+              <i class="bi bi-lock input-icon"></i>
+              <input
+                type="password"
+                formControlName="password"
+                placeholder="••••••••"
+              />
+            </div>
+          </div>
+
+          <!-- Error Message -->
+          @if (error) {
+            <div class="error-msg">
+              <i class="bi bi-exclamation-triangle-fill"></i>
+              {{ error }}
+            </div>
+          }
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn-primary" [disabled]="loading">
+            @if (loading) {
+              <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+              جاري تسجيل الدخول...
+            } @else {
+              <span>تسجيل الدخول</span>
+              <i class="bi bi-arrow-left"></i>
+            }
+          </button>
+        </form>
+
+        <p class="auth-link">
+          ليس لديك حساب؟
+          <a routerLink="/auth/register">سجل هنا</a>
+        </p>
+
+        <footer class="form-footer">
+          <div class="footer-icons">
+            <i class="bi bi-shield-lock"></i>
+            <i class="bi bi-question-circle"></i>
+            <i class="bi bi-globe"></i>
+          </div>
+          <p>© 2024 فلاحيا. جميع الحقوق محفوظة</p>
+        </footer>
+      </div>
+    </div>
+  </div>
+</div>
