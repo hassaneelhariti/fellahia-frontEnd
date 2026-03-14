@@ -1,1 +1,146 @@
-<p>case-submit-component works!</p>
+<main class="cs-main" dir="rtl">
+
+  <header class="cs-header">
+    <div>
+      <h2 class="cs-header__title">تقديم قضية قانونية جديدة</h2>
+      <p class="cs-header__sub">يرجى ملء النموذج أدناه لمساعدتنا في فهم مشكلتك وتوجيهك للمستشار المناسب.</p>
+    </div>
+    <a routerLink="/fellah/cases" class="cs-btn cs-btn--outline">
+      <i class="bi bi-arrow-right"></i>
+      العودة
+    </a>
+  </header>
+
+  <div class="cs-layout">
+
+    <div class="cs-card">
+      <form [formGroup]="form" (ngSubmit)="submit()">
+
+        <div class="cs-field">
+          <label class="cs-label">
+            وصف المشكلة
+            <span class="cs-req">*</span>
+          </label>
+          <p class="cs-hint">اشرح تفاصيل مشكلتك (مثال: نزاع على أرض، عقد إيجار، إلخ)</p>
+          <textarea
+            class="cs-textarea"
+            formControlName="description"
+            rows="6"
+            placeholder="اكتب تفاصيل القضية هنا بشكل مفصل..."
+          ></textarea>
+          <div class="cs-field__footer">
+            <span class="cs-char-count"
+                  [class.cs-char-count--warn]="(form.get('description')?.value?.length || 0) > 2800">
+              {{ form.get('description')?.value?.length || 0 }} / 3000
+            </span>
+          </div>
+        </div>
+
+        <div class="cs-field">
+          <label class="cs-label">المنطقة الجغرافية</label>
+          <div class="cs-input-wrap">
+            <i class="bi bi-geo-alt-fill cs-input-wrap__icon"></i>
+            <input
+              class="cs-input"
+              type="text"
+              formControlName="region"
+              placeholder="مثال: جهة الدار البيضاء - سطات"
+            />
+          </div>
+        </div>
+
+        <div class="cs-field">
+          <label class="cs-label">درجة الاستعجال <span class="cs-req">*</span></label>
+          <div class="cs-urgency-grid">
+            @for (u of urgencies; track u.value) {
+              <label class="cs-urgency-option cs-urgency-option--{{ u.class }}"
+                     [class.cs-urgency-option--selected]="form.get('urgency')?.value === u.value">
+                <input type="radio" formControlName="urgency" [value]="u.value" />
+                <div class="cs-urgency-option__icon">
+                  <i class="{{ u.icon }}"></i>
+                </div>
+                <span class="cs-urgency-option__label">{{ u.label }}</span>
+                <span class="cs-urgency-option__hint">{{ u.hint }}</span>
+              </label>
+            }
+          </div>
+        </div>
+
+        <div class="cs-field">
+          <label class="cs-label">إرفاق وثائق <span class="cs-opt">(اختياري)</span></label>
+          <div class="cs-dropzone" (click)="fileInput.click()">
+            <input #fileInput type="file" multiple (change)="onFiles($event)" style="display:none" />
+            <div class="cs-dropzone__inner">
+              <div class="cs-dropzone__circle">
+                <i class="bi bi-cloud-arrow-up-fill"></i>
+              </div>
+              <p class="cs-dropzone__label">اسحب الملفات هنا أو اضغط للتحميل</p>
+              <p class="cs-dropzone__hint">PDF, JPG, PNG — حتى 10MB لكل ملف</p>
+            </div>
+            @if (files().length > 0) {
+              <div class="cs-file-list">
+                @for (f of files(); track f.name) {
+                  <div class="cs-file-item">
+                    <i class="bi bi-file-earmark-fill"></i>
+                    <span>{{ f.name }}</span>
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        </div>
+
+        @if (error()) {
+          <div class="cs-error">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            {{ error() }}
+          </div>
+        }
+
+        <div class="cs-actions">
+          <button type="button" class="cs-btn cs-btn--outline"
+                  (click)="router.navigate(['/fellah/cases'])">
+            إلغاء
+          </button>
+          <button type="submit" class="cs-btn cs-btn--primary"
+                  [disabled]="form.invalid || loading()">
+            @if (loading()) {
+              <div class="cs-btn__spinner"></div>
+              جاري الإرسال…
+            } @else {
+              <i class="bi bi-send-fill"></i>
+              إرسال الطلب
+            }
+          </button>
+        </div>
+
+      </form>
+    </div>
+
+    <div class="cs-aside">
+      <div class="cs-info-card cs-info-card--forest">
+        <i class="bi bi-shield-fill-check cs-info-card__icon"></i>
+        <div>
+          <h4>خصوصية بياناتك</h4>
+          <p>جميع المعلومات محمية ومشفرة وفق أعلى معايير الخصوصية.</p>
+        </div>
+      </div>
+      <div class="cs-info-card cs-info-card--orange">
+        <i class="bi bi-headset cs-info-card__icon"></i>
+        <div>
+          <h4>تحتاج مساعدة؟</h4>
+          <p>يمكنك الاتصال بالدعم الفني إذا واجهت مشكلة في تعبئة النموذج.</p>
+        </div>
+      </div>
+      <div class="cs-info-card cs-info-card--neutral">
+        <i class="bi bi-clock-fill cs-info-card__icon"></i>
+        <div>
+          <h4>مدة المعالجة</h4>
+          <p>يتم مراجعة طلبك من قبل مستشار متخصص خلال 24 إلى 48 ساعة.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</main>
