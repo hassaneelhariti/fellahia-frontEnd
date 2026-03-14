@@ -14,12 +14,13 @@ export class AuthService {
 
   private baseUrl = 'http://localhost:8080/api/auth';
 
-  currentUser = signal<AuthResponse | null>(this.loadUser());
+  currentUser = signal<AuthResponse | null>(null);
 
-  private loadUser(): AuthResponse | null {
-    if (!this.isBrowser) return null;
-    const stored = localStorage.getItem('user');
-    return stored ? JSON.parse(stored) : null;
+  constructor() {
+    if (this.isBrowser) {
+      const stored = localStorage.getItem('user');
+      this.currentUser.set(stored ? JSON.parse(stored) : null);
+    }
   }
 
   login(body: LoginRequest) {
@@ -41,7 +42,7 @@ export class AuthService {
 
   verifyOtp(body: OtpVerifyRequest) {
     return this.http.post<AuthResponse>(`${this.baseUrl}/verify-otp`, body).pipe(
-      tap(res => this.saveSession(res))  // ← move it here
+      tap(res => this.saveSession(res))
     );
   }
 
