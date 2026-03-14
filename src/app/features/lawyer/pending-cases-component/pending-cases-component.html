@@ -1,0 +1,87 @@
+<main class="pc-main" dir="rtl">
+
+  <header class="lc-header">
+    <div class="lc-header__left">
+      <h2 class="lc-header__title">
+        <i class="bi bi-inbox-fill"></i>
+        الطلبات المعلقة
+      </h2>
+      <p class="lc-header__sub">قضايا بانتظار قبول المحامي</p>
+    </div>
+  </header>
+
+  <div class="lc-body">
+
+    @if (loading()) {
+      <div class="lc-loading">
+        <div class="lc-spinner"></div>
+        <p>جاري تحميل الطلبات…</p>
+      </div>
+    }
+
+    @if (!loading() && cases().length === 0) {
+      <div class="lc-empty">
+        <i class="bi bi-inbox lc-empty__icon"></i>
+        <p>لا توجد طلبات معلقة في الوقت الحالي.</p>
+      </div>
+    }
+
+    <div class="pc-grid">
+      @for (c of cases(); track c.id) {
+        <div class="pc-card">
+          <div class="pc-card__strip pc-card__strip--{{ c.urgency.toLowerCase() }}"></div>
+
+          <div class="pc-card__body">
+            <div class="pc-card__top">
+              <span class="pc-card__ref">{{ c.reference }}</span>
+              <span class="lc-badge lc-badge--urgency-{{ c.urgency.toLowerCase() }}">{{ c.urgency }}</span>
+            </div>
+
+            <div class="pc-card__fellah">
+              <div class="lc-avatar">{{ c.fellahName | slice:0:2 }}</div>
+              <span>{{ c.fellahName }}</span>
+            </div>
+
+            <p class="pc-card__desc">{{ c.description | slice:0:150 }}…</p>
+
+            <div class="pc-card__meta">
+              @if (c.region) {
+                <span><i class="bi bi-geo-alt-fill"></i> {{ c.region }}</span>
+              }
+              <span><i class="bi bi-calendar3"></i> {{ c.createdAt | date:'mediumDate' }}</span>
+            </div>
+
+            <button
+              class="pc-accept-btn"
+              (click)="accept(c.id)"
+              [disabled]="accepting() === c.id"
+              [class.pc-accept-btn--loading]="accepting() === c.id">
+              @if (accepting() === c.id) {
+                <div class="lc-spinner lc-spinner--sm"></div>
+                جاري القبول…
+              } @else {
+                <i class="bi bi-check-circle-fill"></i>
+                قبول القضية
+              }
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+
+    @if (totalPages() > 1) {
+      <div class="lc-pagination">
+        <span class="lc-pagination__info">صفحة {{ page() + 1 }} من {{ totalPages() }}</span>
+        <div class="lc-pagination__btns">
+          <button class="lc-page-btn" (click)="loadPage(page() - 1)" [disabled]="page() === 0">
+            <i class="bi bi-chevron-right"></i>
+          </button>
+          <button class="lc-page-btn" (click)="loadPage(page() + 1)" [disabled]="page() >= totalPages() - 1">
+            <i class="bi bi-chevron-left"></i>
+          </button>
+        </div>
+      </div>
+    }
+
+  </div>
+</main>
