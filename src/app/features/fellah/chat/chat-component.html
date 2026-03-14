@@ -26,7 +26,7 @@
         <div class="bubble-wrap">
           <div class="sender-name">{{ msg.role === 'user' ? 'أنت' : 'المساعد الذكي' }}</div>
           <div class="bubble">
-            <div class="content">{{ msg.content }}</div>
+            <div class="content" markdown [data]="msg.content"></div>
             <div class="time">{{ msg.createdAt | date:'shortTime' }}</div>
           </div>
         </div>

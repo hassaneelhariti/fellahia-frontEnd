@@ -3,10 +3,11 @@ import { ChatMessageResponse } from '../../../core/models/models';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { ChatService } from '../../../core/services/chat-service';
+import {MarkdownComponent} from 'ngx-markdown';
 
 @Component({
   selector: 'app-chat-component',
-  imports: [FormsModule, DatePipe],
+  imports: [FormsModule, DatePipe, MarkdownComponent],
   templateUrl: './chat-component.html',
   styleUrl: './chat-component.scss',
 })
