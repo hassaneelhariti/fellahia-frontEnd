@@ -1,0 +1,20 @@
+:host { display: block; }
+
+.lw-shell {
+  display: grid;
+  grid-template-columns: 272px 1fr;
+  height: 100vh;
+  overflow: hidden;
+  direction: rtl;
+  font-family: 'Public Sans', 'Noto Sans Arabic', sans-serif;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 68px 1fr;
+  }
+
+  &__content {
+    height: 100vh;
+    overflow: hidden;
+    background: #f4f5f0;
+  }
+}

@@ -1,0 +1,42 @@
+<aside class="lws-sidebar">
+  <div class="lws-brand">
+    <div class="lws-brand__icon">
+      <i class="bi bi-briefcase-fill"></i>
+    </div>
+    <div class="lws-brand__text">
+      <span class="lws-brand__name">بوابة المحامي</span>
+      <span class="lws-brand__sub">إدارة القضايا الزراعية</span>
+    </div>
+  </div>
+
+  <nav class="lws-nav">
+    <a routerLink="/lawyer/dashboard" routerLinkActive="lws-nav__item--active"
+       [routerLinkActiveOptions]="{exact: true}" class="lws-nav__item">
+      <i class="bi bi-folder2-open"></i>
+      <span>قضاياي</span>
+    </a>
+    <a routerLink="/lawyer/pending" routerLinkActive="lws-nav__item--active" class="lws-nav__item">
+      <i class="bi bi-inbox-fill"></i>
+      <span>الطلبات المعلقة</span>
+    </a>
+    <a routerLink="/lawyer/settings" routerLinkActive="lws-nav__item--active" class="lws-nav__item">
+      <i class="bi bi-gear-fill"></i>
+      <span>الإعدادات</span>
+    </a>
+  </nav>
+
+  <div class="lws-footer">
+    <div class="lws-profile">
+      <div class="lws-profile__avatar">
+        <i class="bi bi-person-fill"></i>
+      </div>
+      <div class="lws-profile__info">
+        <span class="lws-profile__name">{{ profile()?.fullName || 'المحامي' }}</span>
+        <span class="lws-profile__role">محامٍ معتمد</span>
+      </div>
+    </div>
+    <button class="lws-logout" (click)="logout()" title="تسجيل الخروج">
+      <i class="bi bi-box-arrow-right"></i>
+    </button>
+  </div>
+</aside>
