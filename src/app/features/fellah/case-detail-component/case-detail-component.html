@@ -1,70 +1,136 @@
 @if (loading()) {
-  <div class="loading">Loading case...</div>
+  <div class="loading-state">
+    <div class="spinner"></div>
+    <p>جاري تحميل تفاصيل القضية...</p>
+  </div>
 }
 
 @if (error()) {
-  <div class="error-container">
-    <div class="error-message">❌ Failed to load case details</div>
-    <a routerLink="/fellah/cases" class="back-link">← Back to My Cases</a>
+  <div class="error-state">
+    <i class="bi bi-exclamation-circle-fill"></i>
+    <h3>تعذر تحميل القضية</h3>
+    <p>حدث خطأ أثناء تحميل تفاصيل القضية. يرجى المحاولة مجدداً.</p>
+    <a routerLink="/fellah/cases" class="btn-outline">← العودة إلى قضاياي</a>
   </div>
 }
 
 @if (case() && !loading() && !error()) {
-  <div>
-    <div class="breadcrumb"><a routerLink="/fellah/cases">← My Cases</a></div>
-    <div class="case-header">
-      <h2>Case {{ case()!.reference }}</h2>
-      <div class="badges">
-        <span class="badge urgency-{{ case()!.urgency.toLowerCase() }}">{{ case()!.urgency }}</span>
-        <span class="badge status-{{ case()!.status.toLowerCase() }}">{{ case()!.status }}</span>
-      </div>
+  <div class="main-content">
+
+    <div class="content-header">
+      <nav class="breadcrumb">
+        <a routerLink="/fellah/cases">قضاياي</a>
+        <i class="bi bi-chevron-left"></i>
+        <span>{{ case()!.reference }}</span>
+      </nav>
     </div>
-    <div class="grid">
-      <div class="card main">
-        <h3>Description</h3>
-        <p>{{ case()!.description }}</p>
-      </div>
-      <div class="card info">
-        <h3>Details</h3>
-        <div class="info-row">
-          <span>Submitted</span>
-          <strong>{{ case()!.createdAt | date:'medium' }}</strong>
+
+    <div class="case-detail-grid">
+
+      <div class="case-card">
+        <div class="card-header">
+          <div class="title-wrap">
+            <h2>القضية {{ case()!.reference }}</h2>
+            <span class="case-ref">{{ case()!.createdAt | date:'medium' }}</span>
+          </div>
+          <div class="status-badges">
+            <span class="badge urgency-{{ case()!.urgency.toLowerCase() }}">
+              {{ case()!.urgency }}
+            </span>
+            <span class="badge status-{{ case()!.status.toLowerCase() }}">
+              {{ case()!.status }}
+            </span>
+          </div>
         </div>
-        @if (case()!.region && case()!.region.trim() !== '') {
-          <div class="info-row">
-            <span>Region</span>
-            <strong>📍 {{ case()!.region }}</strong>
-          </div>
-        }
-        @if (case()!.lawyerName) {
-          <div class="info-row">
-            <span>Assigned Lawyer</span>
-            <strong>⚖️ {{ case()!.lawyerName }}</strong>
-          </div>
-        }
-        @if (case()!.cost) {
-          <div class="info-row">
-            <span>Cost</span>
-            <strong>{{ case()!.cost | number:'1.2-2' }} MAD</strong>
-          </div>
-        }
-        <div class="info-row">
-          <span>Fellah</span>
-          <strong>👤 {{ case()!.fellahName }}</strong>
+
+        <div class="description-section">
+          <h3>الوصف</h3>
+          <p>{{ case()!.description }}</p>
         </div>
       </div>
+
+      <div class="case-meta">
+
+        <div class="case-card">
+          <div class="card-header">
+            <h3>تفاصيل القضية</h3>
+          </div>
+          <div class="info-grid">
+            <div class="info-item">
+              <label>صاحب القضية</label>
+              <div class="value">
+                <i class="bi bi-person-fill"></i>
+                {{ case()!.fellahName }}
+              </div>
+            </div>
+
+            @if (case()!.region && case()!.region.trim() !== '') {
+              <div class="info-item">
+                <label>المنطقة</label>
+                <div class="value">
+                  <i class="bi bi-geo-alt-fill"></i>
+                  {{ case()!.region }}
+                </div>
+              </div>
+            }
+
+            @if (case()!.lawyerName) {
+              <div class="info-item">
+                <label>المحامي المعين</label>
+                <div class="value">
+                  <i class="bi bi-briefcase-fill"></i>
+                  {{ case()!.lawyerName }}
+                </div>
+              </div>
+            }
+
+            @if (case()!.cost) {
+              <div class="info-item">
+                <label>التكلفة</label>
+                <div class="value price">
+                  {{ case()!.cost | number:'1.2-2' }} درهم
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+
+        <div class="case-card support-card">
+          <h3>هل تحتاج مساعدة؟</h3>
+          <p>تواصل مع فريق الدعم للحصول على مساعدة إضافية بشأن قضيتك.</p>
+          <button class="btn-primary full-width">
+            <i class="bi bi-headset"></i>
+            تواصل مع الدعم
+          </button>
+        </div>
+
+      </div>
     </div>
+
     @if (case()!.files && case()!.files.length > 0) {
-      <div class="card files">
-        <h3>📎 Attachments ({{ case()!.files.length }})</h3>
-        @for (f of case()!.files; track f.id) {
-          <div class="file-item">
-            <span>📄 {{ f.fileName }}</span>
-            <span class="file-size">{{ (f.sizeBytes / 1024) | number:'1.0-1' }} KB</span>
-            <a [href]="f.downloadUrl" target="_blank" class="dl-btn">⬇ Download</a>
-          </div>
-        }
+      <div class="case-card full-width" style="margin-top: 1.5rem">
+        <div class="card-header">
+          <h3>
+            <i class="bi bi-paperclip"></i>
+            المرفقات ({{ case()!.files.length }})
+          </h3>
+        </div>
+        <div class="attachments-list">
+          @for (f of case()!.files; track f.id) {
+            <div class="file-card">
+              <i class="bi bi-file-earmark-fill file-icon"></i>
+              <div class="file-info">
+                <span class="file-name">{{ f.fileName }}</span>
+                <span class="file-meta">{{ (f.sizeBytes / 1024) | number:'1.0-1' }} KB</span>
+              </div>
+              <a [href]="f.downloadUrl" target="_blank" class="download-btn">
+                <i class="bi bi-download"></i>
+              </a>
+            </div>
+          }
+        </div>
       </div>
     }
+
   </div>
 }
