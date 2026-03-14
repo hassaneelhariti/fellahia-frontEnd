@@ -1,4 +1,4 @@
-<main class="chat-main">
+<main class="chat-main" dir="rtl">
   <header class="chat-header">
     <div class="title-wrap">
       <h2><i class="bi bi-robot"></i> المساعد القانوني الذكي</h2>
@@ -10,7 +10,7 @@
   </header>
 
   <div class="messages-viewport" #messagesContainer>
-    @if (messages.length === 0) {
+    @if (messages().length === 0) {
       <div class="empty-state">
         <div class="icon-box">🤖</div>
         <h3>مرحباً بك!</h3>
@@ -18,7 +18,7 @@
       </div>
     }
 
-    @for (msg of messages; track msg.id) {
+    @for (msg of messages(); track msg.id) {
       <div class="message-row" [class.user]="msg.role === 'user'" [class.assistant]="msg.role === 'assistant'">
         <div class="avatar">
           <i [class]="msg.role === 'user' ? 'bi bi-person-fill' : 'bi bi-robot'"></i>
@@ -33,7 +33,7 @@
       </div>
     }
 
-    @if (loading) {
+    @if (loading()) {
       <div class="message-row assistant">
         <div class="avatar"><i class="bi bi-robot"></i></div>
         <div class="bubble loading-bubble">
@@ -46,13 +46,14 @@
   <div class="input-panel">
     <div class="input-container">
       <textarea
-        [(ngModel)]="inputMessage"
+        [ngModel]="inputMessage()"
+        (ngModelChange)="inputMessage.set($event)"
         placeholder="اكتب سؤالك هنا..."
         (keydown.enter)="onEnter($event)"
         rows="1"
       ></textarea>
-      <button class="send-btn" (click)="send()" [disabled]="!inputMessage.trim() || loading">
-        @if (loading) {
+      <button class="send-btn" (click)="send()" [disabled]="!inputMessage().trim() || loading()">
+        @if (loading()) {
           <span class="spinner-border spinner-border-sm"></span>
         } @else {
           <i class="bi bi-send-fill"></i>
