@@ -1,177 +1,184 @@
 <main class="fd-main" dir="rtl">
 
-  <header class="fd-topbar">
-    <div class="fd-search">
-      <i class="bi bi-search"></i>
-      <input type="text" placeholder="بحث عن نصائح، أدوية، أو حالات...">
-    </div>
-    <div class="fd-topbar__actions">
-      <button class="fd-icon-btn">
-        <i class="bi bi-bell-fill"></i>
-        <span class="fd-badge">3</span>
-      </button>
-      <button class="fd-icon-btn">
-        <i class="bi bi-question-circle-fill"></i>
-      </button>
-    </div>
-  </header>
+  @if (loading()) {
+    <div class="fd-loading">جاري التحميل...</div>
+  } @else if (error()) {
+    <div class="fd-error">حدث خطأ أثناء تحميل البيانات.</div>
+  } @else {
 
-  <section class="fd-body">
-
-    <div class="fd-welcome">
-      <div class="fd-welcome__text">
-        <h1>مرحباً بك، {{ profile?.fullName || 'أحمد' }}!</h1>
-        <p>نظام FellahIA جاهز لمساعدتك في تدبير ضيعتك الفلاحية اليوم.</p>
-        <div class="fd-welcome__tag">
-          <i class="bi bi-graph-up-arrow"></i>
-          <span>حالة المحاصيل ممتازة هذا الأسبوع في منطقة سوس.</span>
-        </div>
+    <header class="fd-topbar">
+      <div class="fd-search">
+        <i class="bi bi-search"></i>
+        <input type="text" placeholder="بحث عن نصائح، أدوية، أو حالات...">
       </div>
-      <div class="fd-welcome__image">
-        <i class="bi bi-flower1"></i>
-      </div>
-    </div>
-
-    <div class="fd-grid">
-      <div class="fd-stat-card">
-        <div class="fd-stat-card__header">
-          <span class="fd-stat-card__label">الرصيد المتاح</span>
-          <i class="bi bi-wallet2"></i>
-        </div>
-        <div class="fd-stat-card__value">
-          <span class="fd-stat-card__currency">درهم</span>
-          <span class="fd-stat-card__amount">{{ profile?.balance ? (profile?.balance | number:'1.2-2') : '12,500.00' }}</span>
-        </div>
-        <button class="fd-topup-btn">
-          <i class="bi bi-plus-circle"></i>
-          تعبئة الرصيد
+      <div class="fd-topbar__actions">
+        <button class="fd-icon-btn">
+          <i class="bi bi-bell-fill"></i>
+          <span class="fd-badge">3</span>
+        </button>
+        <button class="fd-icon-btn">
+          <i class="bi bi-question-circle-fill"></i>
         </button>
       </div>
+    </header>
 
-      <div class="fd-action-card" routerLink="/fellah/chat">
-        <div class="fd-action-card__icon">
-          <i class="bi bi-robot"></i>
-        </div>
-        <h3>اسأل المساعد الذكي</h3>
-        <p>استشارات فورية لأمراض النباتات</p>
-      </div>
+    <section class="fd-body">
 
-      <div class="fd-action-card" routerLink="/fellah/cases/new">
-        <div class="fd-action-card__icon">
-          <i class="bi bi-plus-lg"></i>
-        </div>
-        <h3>تقديم حالة جديدة</h3>
-        <p>أرسل صوراً ومواصفات لطلب خبرة</p>
-      </div>
-    </div>
-
-    <div class="fd-info-grid">
-
-      <div class="fd-section">
-        <div class="fd-section__header">
-          <h2><i class="bi bi-clock-history"></i> آخر التحديثات</h2>
-          <a href="#" class="fd-link">الكل</a>
-        </div>
-        <div class="fd-updates">
-          <div class="fd-update-item">
-            <div class="fd-update-item__icon fd-update-item__icon--success">
-              <i class="bi bi-check-circle-fill"></i>
-            </div>
-            <div class="fd-update-item__details">
-              <p class="fd-update-item__title">تم تحليل حالة مرض "المن"</p>
-              <p class="fd-update-item__time">منذ ساعتين • استجابة فورية</p>
-            </div>
+      <div class="fd-welcome">
+        <div class="fd-welcome__text">
+          <h1>مرحباً بك، {{ profile()?.fullName || 'أحمد' }}!</h1>
+          <p>نظام FellahIA جاهز لمساعدتك في تدبير ضيعتك الفلاحية اليوم.</p>
+          <div class="fd-welcome__tag">
+            <i class="bi bi-graph-up-arrow"></i>
+            <span>حالة المحاصيل ممتازة هذا الأسبوع في منطقة سوس.</span>
           </div>
-          <div class="fd-update-item">
-            <div class="fd-update-item__icon fd-update-item__icon--warning">
-              <i class="bi bi-cash-stack"></i>
-            </div>
-            <div class="fd-update-item__details">
-              <p class="fd-update-item__title">تم خصم 50 درهم لطلب خبرة</p>
-              <p class="fd-update-item__time">يوم أمس • رقم العملية #1209</p>
-            </div>
-          </div>
-          <div class="fd-update-item">
-            <div class="fd-update-item__icon fd-update-item__icon--info">
-              <i class="bi bi-droplet"></i>
-            </div>
-            <div class="fd-update-item__details">
-              <p class="fd-update-item__title">تذكير: موعد الري غداً</p>
-              <p class="fd-update-item__time">قبل 5 ساعات • بناءً على توقعات الطقس</p>
-            </div>
-          </div>
+        </div>
+        <div class="fd-welcome__image">
+          <i class="bi bi-flower1"></i>
         </div>
       </div>
 
-      <div class="fd-section">
-        <div class="fd-section__header">
-          <h2><i class="bi bi-person-badge"></i> معلومات الحساب</h2>
-          <button class="fd-edit-btn" routerLink="/fellah/settings">
-            <i class="bi bi-pencil"></i> تعديل
+      <div class="fd-grid">
+        <div class="fd-stat-card">
+          <div class="fd-stat-card__header">
+            <span class="fd-stat-card__label">الرصيد المتاح</span>
+            <i class="bi bi-wallet2"></i>
+          </div>
+          <div class="fd-stat-card__value">
+            <span class="fd-stat-card__currency">درهم</span>
+            <span class="fd-stat-card__amount">{{ profile()?.balance ? (profile()?.balance | number:'1.2-2') : '12,500.00' }}</span>
+          </div>
+          <button class="fd-topup-btn">
+            <i class="bi bi-plus-circle"></i>
+            تعبئة الرصيد
           </button>
         </div>
-        <div class="fd-profile">
-          <div class="fd-profile__row">
-            <span class="fd-profile__label">الاسم الكامل</span>
-            <span class="fd-profile__value">{{ profile?.fullName || 'أحمد العمراني' }}</span>
+
+        <div class="fd-action-card" routerLink="/fellah/chat">
+          <div class="fd-action-card__icon">
+            <i class="bi bi-robot"></i>
           </div>
-          <div class="fd-profile__row">
-            <span class="fd-profile__label">رقم الهاتف</span>
-            <span class="fd-profile__value" dir="ltr">{{ profile?.phone || '+212 600 000 000' }}</span>
+          <h3>اسأل المساعد الذكي</h3>
+          <p>استشارات فورية لأمراض النباتات</p>
+        </div>
+
+        <div class="fd-action-card" routerLink="/fellah/cases/new">
+          <div class="fd-action-card__icon">
+            <i class="bi bi-plus-lg"></i>
           </div>
-          <div class="fd-profile__row">
-            <span class="fd-profile__label">البريد الإلكتروني</span>
-            <span class="fd-profile__value" dir="ltr">{{ profile?.email || 'ahmed.elamrani@example.com' }}</span>
-          </div>
-          <div class="fd-profile__row">
-            <span class="fd-profile__label">المنطقة</span>
-            <span class="fd-profile__value">{{ profile?.region || 'إقليم تارودانت، سوس ماسة' }}</span>
-          </div>
-          <div class="fd-profile__row">
-            <span class="fd-profile__label">عضو منذ</span>
-            <span class="fd-profile__value">{{ profile?.createdAt || 'يناير 2025' }}</span>
-          </div>
+          <h3>تقديم حالة جديدة</h3>
+          <p>أرسل صوراً ومواصفات لطلب خبرة</p>
         </div>
       </div>
 
-    </div>
+      <div class="fd-info-grid">
 
-    <div class="fd-recent">
-      <div class="fd-section__header">
-        <h2><i class="bi bi-folder"></i> حالاتي الأخيرة</h2>
-        <a routerLink="/fellah/cases" class="fd-link">عرض الكل</a>
+        <div class="fd-section">
+          <div class="fd-section__header">
+            <h2><i class="bi bi-clock-history"></i> آخر التحديثات</h2>
+            <a href="#" class="fd-link">الكل</a>
+          </div>
+          <div class="fd-updates">
+            <div class="fd-update-item">
+              <div class="fd-update-item__icon fd-update-item__icon--success">
+                <i class="bi bi-check-circle-fill"></i>
+              </div>
+              <div class="fd-update-item__details">
+                <p class="fd-update-item__title">تم تحليل حالة مرض "المن"</p>
+                <p class="fd-update-item__time">منذ ساعتين • استجابة فورية</p>
+              </div>
+            </div>
+            <div class="fd-update-item">
+              <div class="fd-update-item__icon fd-update-item__icon--warning">
+                <i class="bi bi-cash-stack"></i>
+              </div>
+              <div class="fd-update-item__details">
+                <p class="fd-update-item__title">تم خصم 50 درهم لطلب خبرة</p>
+                <p class="fd-update-item__time">يوم أمس • رقم العملية #1209</p>
+              </div>
+            </div>
+            <div class="fd-update-item">
+              <div class="fd-update-item__icon fd-update-item__icon--info">
+                <i class="bi bi-droplet"></i>
+              </div>
+              <div class="fd-update-item__details">
+                <p class="fd-update-item__title">تذكير: موعد الري غداً</p>
+                <p class="fd-update-item__time">قبل 5 ساعات • بناءً على توقعات الطقس</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="fd-section">
+          <div class="fd-section__header">
+            <h2><i class="bi bi-person-badge"></i> معلومات الحساب</h2>
+            <button class="fd-edit-btn" routerLink="/fellah/settings">
+              <i class="bi bi-pencil"></i> تعديل
+            </button>
+          </div>
+          <div class="fd-profile">
+            <div class="fd-profile__row">
+              <span class="fd-profile__label">الاسم الكامل</span>
+              <span class="fd-profile__value">{{ profile()?.fullName || 'أحمد العمراني' }}</span>
+            </div>
+            <div class="fd-profile__row">
+              <span class="fd-profile__label">رقم الهاتف</span>
+              <span class="fd-profile__value" dir="ltr">{{ profile()?.phone || '+212 600 000 000' }}</span>
+            </div>
+            <div class="fd-profile__row">
+              <span class="fd-profile__label">البريد الإلكتروني</span>
+              <span class="fd-profile__value" dir="ltr">{{ profile()?.email || 'ahmed.elamrani@example.com' }}</span>
+            </div>
+            <div class="fd-profile__row">
+              <span class="fd-profile__label">المنطقة</span>
+              <span class="fd-profile__value">{{ profile()?.region || 'إقليم تارودانت، سوس ماسة' }}</span>
+            </div>
+            <div class="fd-profile__row">
+              <span class="fd-profile__label">عضو منذ</span>
+              <span class="fd-profile__value">{{ profile()?.createdAt || 'يناير 2025' }}</span>
+            </div>
+          </div>
+        </div>
+
       </div>
-      <div class="fd-cases-grid">
 
-        <div class="fd-case">
-          <div class="fd-case__bar fd-case__bar--active"></div>
-          <div class="fd-case__info">
-            <h4>مرض التبقع البني</h4>
-            <p>٢٥ فبراير ٢٠٢٥</p>
-          </div>
-          <span class="fd-case__badge fd-case__badge--active">قيد المعالجة</span>
+      <div class="fd-recent">
+        <div class="fd-section__header">
+          <h2><i class="bi bi-folder"></i> حالاتي الأخيرة</h2>
+          <a routerLink="/fellah/cases" class="fd-link">عرض الكل</a>
         </div>
+        <div class="fd-cases-grid">
 
-        <div class="fd-case">
-          <div class="fd-case__bar fd-case__bar--resolved"></div>
-          <div class="fd-case__info">
-            <h4>حشرة المن على القمح</h4>
-            <p>٢٠ فبراير ٢٠٢٥</p>
+          <div class="fd-case">
+            <div class="fd-case__bar fd-case__bar--active"></div>
+            <div class="fd-case__info">
+              <h4>مرض التبقع البني</h4>
+              <p>٢٥ فبراير ٢٠٢٥</p>
+            </div>
+            <span class="fd-case__badge fd-case__badge--active">قيد المعالجة</span>
           </div>
-          <span class="fd-case__badge fd-case__badge--resolved">تم الحل</span>
-        </div>
 
-        <div class="fd-case">
-          <div class="fd-case__bar fd-case__bar--pending"></div>
-          <div class="fd-case__info">
-            <h4>نقص النيتروجين</h4>
-            <p>١٥ فبراير ٢٠٢٥</p>
+          <div class="fd-case">
+            <div class="fd-case__bar fd-case__bar--resolved"></div>
+            <div class="fd-case__info">
+              <h4>حشرة المن على القمح</h4>
+              <p>٢٠ فبراير ٢٠٢٥</p>
+            </div>
+            <span class="fd-case__badge fd-case__badge--resolved">تم الحل</span>
           </div>
-          <span class="fd-case__badge fd-case__badge--pending">في الانتظار</span>
-        </div>
 
+          <div class="fd-case">
+            <div class="fd-case__bar fd-case__bar--pending"></div>
+            <div class="fd-case__info">
+              <h4>نقص النيتروجين</h4>
+              <p>١٥ فبراير ٢٠٢٥</p>
+            </div>
+            <span class="fd-case__badge fd-case__badge--pending">في الانتظار</span>
+          </div>
+
+        </div>
       </div>
-    </div>
 
-  </section>
+    </section>
+  }
 </main>

@@ -1,8 +1,8 @@
-import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild, inject, signal } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, inject, signal, effect } from '@angular/core';
 import { ChatMessageResponse } from '../../../core/models/models';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import {ChatService} from '../../../core/services/chat-service';
+import { ChatService } from '../../../core/services/chat-service';
 
 @Component({
   selector: 'app-chat-component',
@@ -10,7 +10,7 @@ import {ChatService} from '../../../core/services/chat-service';
   templateUrl: './chat-component.html',
   styleUrl: './chat-component.scss',
 })
-export class ChatComponent implements OnInit, AfterViewChecked {
+export class ChatComponent implements OnInit {
   @ViewChild('messagesContainer') messagesContainer!: ElementRef;
 
   private chatService = inject(ChatService);
@@ -19,11 +19,19 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   inputMessage = signal('');
   loading = signal(false);
 
+  constructor() {
+    effect(() => {
+      this.messages();
+      this.loading();
+      setTimeout(() => this.scrollToBottom());
+    });
+  }
+
   ngOnInit() {
     this.chatService.getHistory().subscribe(msgs => this.messages.set(msgs));
   }
 
-  ngAfterViewChecked() {
+  private scrollToBottom() {
     const el = this.messagesContainer?.nativeElement;
     if (el) el.scrollTop = el.scrollHeight;
   }

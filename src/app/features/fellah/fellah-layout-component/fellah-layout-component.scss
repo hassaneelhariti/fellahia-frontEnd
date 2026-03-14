@@ -1,12 +1,18 @@
-// fellah-layout.component.scss
 .fellah-layout {
   display: grid;
   grid-template-columns: 272px 1fr;
   height: 100vh;
   overflow: hidden;
 
-  &__content {   // wraps <router-outlet>
+  &__content {
     height: 100vh;
-    overflow: hidden;   // each child manages its own scroll
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    > * {
+      flex: 1;
+      min-height: 0;
+    }
   }
 }
