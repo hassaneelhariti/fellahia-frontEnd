@@ -1,0 +1,538 @@
+/* =============================================
+   case-detail.component.scss
+   فلاح IA — Case Detail Component Styles
+   ============================================= */
+
+/* ─── Layout ──────────────────────────────── */
+.dashboard-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  min-height: 100vh;
+  font-family: 'Noto Sans Arabic', sans-serif;
+  background-color: #f9fafb;
+  direction: rtl;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 80px 1fr;
+
+    .sidebar span,
+    .sidebar .user-info,
+    .sidebar .brand span {
+      display: none;
+    }
+  }
+}
+
+
+/* ─── Main Content ────────────────────────── */
+.main-content {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ─── Page Header ─────────────────────────── */
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #6b7280;
+  font-size: 0.875rem;
+
+  a {
+    color: #6b7280;
+    text-decoration: none;
+    transition: color 0.15s;
+
+    &:hover { color: #2d6a4f; }
+  }
+
+  i { font-size: 0.625rem; }
+
+  span {
+    font-weight: 600;
+    color: #1b4332;
+  }
+}
+
+.header-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+/* ─── Buttons ─────────────────────────────── */
+.btn-primary {
+  background-color: #e65100;
+  color: #fff;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-family: inherit;
+  font-size: 0.875rem;
+
+  &:hover { background-color: #bf4300; }
+
+  &.full-width { width: 100%; }
+}
+
+.btn-outline {
+  border: 1px solid #d1d5db;
+  background: #fff;
+  color: #374151;
+  padding: 0.5rem 1.25rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.875rem;
+  transition: border-color 0.15s, background 0.15s;
+
+  &:hover {
+    border-color: #9ca3af;
+    background: #f9fafb;
+  }
+}
+
+.btn-text {
+  background: none;
+  border: none;
+  color: #2d6a4f;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.875rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  transition: color 0.15s, background 0.15s;
+
+  &:hover {
+    color: #1b4332;
+    background: #e3eee9;
+  }
+}
+
+/* ─── Case Detail Grid ────────────────────── */
+.case-detail-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.5rem;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ─── Cards ───────────────────────────────── */
+.case-card {
+  background: #fff;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e5e7eb;
+
+  &.full-width {
+    grid-column: span 2;
+
+    @media (max-width: 900px) {
+      grid-column: span 1;
+    }
+  }
+}
+
+.case-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ─── Card Header ─────────────────────────── */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #f3f4f6;
+  padding-bottom: 1rem;
+
+  h2 {
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: #1b4332;
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1b4332;
+    margin: 0;
+  }
+}
+
+.title-wrap {
+  flex: 1;
+  min-width: 0;
+}
+
+.case-ref {
+  display: block;
+  color: #6b7280;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}
+
+/* ─── Status Badges ───────────────────────── */
+.status-badges {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  margin-right: 1rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  white-space: nowrap;
+}
+
+/* Urgency variants */
+.urgency-high,
+.urgency-عاجل\ جداً { background-color: #fee2e2; color: #991b1b; }
+
+.urgency-medium,
+.urgency-متوسط    { background-color: #fef3c7; color: #92400e; }
+
+.urgency-low,
+.urgency-منخفض    { background-color: #dcfce7; color: #166534; }
+
+/* Status variants */
+.status-open,
+.status-قيد\ المعالجة { background-color: #dbeafe; color: #1e40af; }
+
+.status-pending,
+.status-معلق          { background-color: #f3f4f6; color: #374151; }
+
+.status-closed,
+.status-مغلق          { background-color: #f3f4f6; color: #6b7280; }
+
+/* ─── Info Grid ───────────────────────────── */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.info-item {
+  label {
+    display: block;
+    color: #6b7280;
+    font-size: 0.8rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .value {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    color: #1f2937;
+    font-size: 0.9rem;
+
+    i { color: #2d6a4f; }
+
+    &.price {
+      font-size: 1.125rem;
+      color: #e65100;
+    }
+  }
+}
+
+/* ─── Description ─────────────────────────── */
+.description-section {
+  h3 {
+    font-weight: 700;
+    margin-bottom: 0.875rem;
+    color: #1b4332;
+    font-size: 1rem;
+  }
+
+  p {
+    line-height: 1.8;
+    color: #4b5563;
+    font-size: 0.9rem;
+    margin: 0;
+  }
+}
+
+/* ─── Activity Timeline ───────────────────── */
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  position: relative;
+  margin-top: 1rem;
+
+  &::before {
+    content: '';
+    position: absolute;
+    right: 15px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #e5e7eb;
+  }
+}
+
+.timeline-item {
+  display: flex;
+  gap: 1.5rem;
+  position: relative;
+  padding-right: 2.5rem;
+
+  .icon {
+    position: absolute;
+    right: 0;
+    width: 32px;
+    height: 32px;
+    background: #fff;
+    border: 2px solid #2d6a4f;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    color: #2d6a4f;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+
+  &.active .icon {
+    background: #2d6a4f;
+    color: #fff;
+  }
+
+  &.pending .icon {
+    border-color: #e65100;
+    color: #e65100;
+  }
+
+  .text {
+    p {
+      font-weight: 600;
+      font-size: 0.875rem;
+      margin: 0 0 0.25rem;
+      color: #1f2937;
+    }
+
+    span {
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+  }
+}
+
+/* ─── Support Card ────────────────────────── */
+.support-card {
+  background: linear-gradient(135deg, #2d6a4f 0%, #1b4332 100%);
+  color: #fff;
+  text-align: center;
+
+  h3 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: #fff;
+  }
+
+  p {
+    font-size: 0.85rem;
+    opacity: 0.9;
+    margin-bottom: 1.5rem;
+    color: #e3eee9;
+    line-height: 1.6;
+  }
+
+  .btn-primary {
+    background-color: #e65100;
+    border: none;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+}
+
+/* ─── Attachments ─────────────────────────── */
+.attachments-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.file-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  transition: background 0.15s, border-color 0.15s;
+  cursor: default;
+
+  &:hover {
+    background-color: #f9fafb;
+    border-color: #d1d5db;
+  }
+}
+
+.file-icon {
+  font-size: 2rem;
+  color: #dc2626;
+  flex-shrink: 0;
+
+  &.text-blue-600 { color: #2563eb; }
+}
+
+.file-info {
+  flex: 1;
+  min-width: 0;
+
+  .file-name {
+    display: block;
+    font-weight: 600;
+    color: #1f2937;
+    font-size: 0.875rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .file-meta {
+    display: block;
+    font-size: 0.72rem;
+    color: #6b7280;
+    margin-top: 0.2rem;
+  }
+}
+
+.download-btn {
+  color: #2d6a4f;
+  font-size: 1.1rem;
+  padding: 0.4rem 0.5rem;
+  border-radius: 0.375rem;
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: background 0.15s, color 0.15s;
+
+  &:hover {
+    background-color: #e3eee9;
+    color: #1b4332;
+  }
+}
+
+/* ─── Empty State ─────────────────────────── */
+.empty-files {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 2rem;
+  color: #9ca3af;
+
+  i {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+
+  p {
+    font-size: 0.875rem;
+    margin: 0;
+  }
+}
+
+/* ─── Loading State ───────────────────────── */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  color: #6b7280;
+
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #e5e7eb;
+    border-top-color: #2d6a4f;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 0.875rem;
+    margin: 0;
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ─── Error State ─────────────────────────── */
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+
+  i {
+    font-size: 3rem;
+    color: #dc2626;
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    color: #6b7280;
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+  }
+}

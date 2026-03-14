@@ -1,1 +1,70 @@
-<p>case-detail-component works!</p>
+@if (loading()) {
+  <div class="loading">Loading case...</div>
+}
+
+@if (error()) {
+  <div class="error-container">
+    <div class="error-message">❌ Failed to load case details</div>
+    <a routerLink="/fellah/cases" class="back-link">← Back to My Cases</a>
+  </div>
+}
+
+@if (case() && !loading() && !error()) {
+  <div>
+    <div class="breadcrumb"><a routerLink="/fellah/cases">← My Cases</a></div>
+    <div class="case-header">
+      <h2>Case {{ case()!.reference }}</h2>
+      <div class="badges">
+        <span class="badge urgency-{{ case()!.urgency.toLowerCase() }}">{{ case()!.urgency }}</span>
+        <span class="badge status-{{ case()!.status.toLowerCase() }}">{{ case()!.status }}</span>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="card main">
+        <h3>Description</h3>
+        <p>{{ case()!.description }}</p>
+      </div>
+      <div class="card info">
+        <h3>Details</h3>
+        <div class="info-row">
+          <span>Submitted</span>
+          <strong>{{ case()!.createdAt | date:'medium' }}</strong>
+        </div>
+        @if (case()!.region && case()!.region.trim() !== '') {
+          <div class="info-row">
+            <span>Region</span>
+            <strong>📍 {{ case()!.region }}</strong>
+          </div>
+        }
+        @if (case()!.lawyerName) {
+          <div class="info-row">
+            <span>Assigned Lawyer</span>
+            <strong>⚖️ {{ case()!.lawyerName }}</strong>
+          </div>
+        }
+        @if (case()!.cost) {
+          <div class="info-row">
+            <span>Cost</span>
+            <strong>{{ case()!.cost | number:'1.2-2' }} MAD</strong>
+          </div>
+        }
+        <div class="info-row">
+          <span>Fellah</span>
+          <strong>👤 {{ case()!.fellahName }}</strong>
+        </div>
+      </div>
+    </div>
+    @if (case()!.files && case()!.files.length > 0) {
+      <div class="card files">
+        <h3>📎 Attachments ({{ case()!.files.length }})</h3>
+        @for (f of case()!.files; track f.id) {
+          <div class="file-item">
+            <span>📄 {{ f.fileName }}</span>
+            <span class="file-size">{{ (f.sizeBytes / 1024) | number:'1.0-1' }} KB</span>
+            <a [href]="f.downloadUrl" target="_blank" class="dl-btn">⬇ Download</a>
+          </div>
+        }
+      </div>
+    }
+  </div>
+}

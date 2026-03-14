@@ -1,1 +1,108 @@
-<p>case-list-component works!</p>
+<main class="cl-main">
+
+  <header class="cl-header">
+    <div class="cl-header__title">
+      <span class="material-symbols-outlined cl-header__icon">folder_open</span>
+      <h2>قضاياي</h2>
+    </div>
+    <a routerLink="/fellah/cases/submit" class="cl-btn-new">
+      <span class="material-symbols-outlined">add</span>
+      قضية جديدة
+    </a>
+  </header>
+
+  <div class="cl-body">
+
+    <div class="cl-filters">
+      <button class="cl-filter cl-filter--active">الكل</button>
+      <button class="cl-filter">نشط</button>
+      <button class="cl-filter">مكتمل</button>
+      <button class="cl-filter">مؤرشف</button>
+    </div>
+
+    @if (loading()) {
+      <div class="cl-loading">
+        <div class="cl-spinner"></div>
+        <p>جاري تحميل القضايا…</p>
+      </div>
+    }
+
+    @if (!loading() && cases().length === 0) {
+      <div class="cl-empty">
+        <span class="material-symbols-outlined cl-empty__icon">folder_off</span>
+        <p>لا توجد قضايا بعد.</p>
+        <a routerLink="/fellah/cases/submit" class="cl-btn-new">تقديم أول قضية</a>
+      </div>
+    }
+
+    <div class="cl-grid">
+      @for (c of cases(); track c.id) {
+        <div class="cl-card" [routerLink]="['/fellah/cases', c.id]">
+          <div class="cl-card__strip cl-card__strip--{{ c.urgency.toLowerCase() }}"></div>
+
+          <div class="cl-card__body">
+            <div class="cl-card__top">
+              <span class="cl-card__ref">{{ c.reference }}</span>
+              <span class="cl-badge cl-badge--urgency-{{ c.urgency.toLowerCase() }}">{{ c.urgency }}</span>
+            </div>
+
+            <h3 class="cl-card__title">{{ c.description | slice:0:60 }}…</h3>
+
+            <p class="cl-card__excerpt">{{ c.description | slice:0:120 }}…</p>
+
+            <div class="cl-card__meta">
+              @if (c.region) {
+                <span class="cl-card__meta-item">
+                  <span class="material-symbols-outlined">location_on</span>
+                  {{ c.region }}
+                </span>
+              }
+              <span class="cl-card__meta-item">
+                <span class="material-symbols-outlined">calendar_today</span>
+                {{ c.createdAt | date:'mediumDate' }}
+              </span>
+            </div>
+
+            <div class="cl-card__footer">
+              <span class="cl-badge cl-badge--status-{{ c.status.toLowerCase() }}">
+                <span class="cl-badge__dot"></span>
+                {{ c.status }}
+              </span>
+              <button class="cl-card__cta">
+                التفاصيل
+                <span class="material-symbols-outlined">arrow_back</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+
+      <div class="cl-card-add" routerLink="/fellah/cases/submit">
+        <div class="cl-card-add__inner">
+          <div class="cl-card-add__circle">
+            <span class="material-symbols-outlined">post_add</span>
+          </div>
+          <p class="cl-card-add__label">إضافة قضية جديدة</p>
+          <p class="cl-card-add__hint">ابدأ استشارة قانونية الآن</p>
+        </div>
+      </div>
+    </div>
+
+    @if (totalPages() > 1) {
+      <div class="cl-pagination">
+        <button class="cl-page-btn"
+                (click)="loadPage(page() - 1)"
+                [disabled]="page() === 0">
+          <span class="material-symbols-outlined">chevron_right</span>
+        </button>
+        <span class="cl-page-info">{{ page() + 1 }} / {{ totalPages() }}</span>
+        <button class="cl-page-btn"
+                (click)="loadPage(page() + 1)"
+                [disabled]="page() >= totalPages() - 1">
+          <span class="material-symbols-outlined">chevron_left</span>
+        </button>
+      </div>
+    }
+
+  </div>
+</main>
