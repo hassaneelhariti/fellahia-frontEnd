@@ -1,0 +1,88 @@
+<main class="lc-main" dir="rtl">
+
+  <header class="lc-header">
+    <div class="lc-header__left">
+      <h2 class="lc-header__title">
+        <i class="bi bi-folder2-open"></i>
+        قضاياي
+      </h2>
+      <p class="lc-header__sub">متابعة وإدارة القضايا المقبولة</p>
+    </div>
+    <div class="lc-header__search">
+      <i class="bi bi-search"></i>
+      <input type="text" placeholder="البحث عن قضية...">
+    </div>
+  </header>
+
+  <div class="lc-body">
+
+    @if (loading()) {
+      <div class="lc-loading">
+        <div class="lc-spinner"></div>
+        <p>جاري تحميل القضايا…</p>
+      </div>
+    }
+
+    @if (!loading() && cases().length === 0) {
+      <div class="lc-empty">
+        <i class="bi bi-folder2-open lc-empty__icon"></i>
+        <p>لا توجد قضايا بعد. اقبل طلبات معلقة للبدء!</p>
+      </div>
+    }
+
+    @if (cases().length > 0) {
+      <div class="lc-table-wrap">
+        <table class="lc-table">
+          <thead>
+          <tr>
+            <th>مرجع القضية</th>
+            <th>المزارع</th>
+            <th>الأهمية</th>
+            <th>الحالة</th>
+            <th>المنطقة</th>
+            <th>التاريخ</th>
+          </tr>
+          </thead>
+          <tbody>
+            @for (c of cases(); track c.id) {
+              <tr class="lc-table__row">
+                <td class="lc-table__ref">{{ c.reference }}</td>
+                <td class="lc-table__fellah">
+                  <div class="lc-avatar">{{ c.fellahName | slice:0:2 }}</div>
+                  <span>{{ c.fellahName }}</span>
+                </td>
+                <td>
+                  <span class="lc-badge lc-badge--urgency-{{ c.urgency.toLowerCase() }}">
+                    {{ c.urgency }}
+                  </span>
+                </td>
+                <td>
+                  <span class="lc-badge lc-badge--status-{{ c.status.toLowerCase() }}">
+                    {{ c.status }}
+                  </span>
+                </td>
+                <td class="lc-table__meta">{{ c.region || '—' }}</td>
+                <td class="lc-table__meta">{{ c.createdAt | date:'mediumDate' }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <div class="lc-pagination">
+        <span class="lc-pagination__info">
+          صفحة {{ page() + 1 }} من {{ totalPages() }}
+        </span>
+        <div class="lc-pagination__btns">
+          <button class="lc-page-btn" (click)="loadPage(page() - 1)" [disabled]="page() === 0">
+            <i class="bi bi-chevron-right"></i>
+          </button>
+          <button class="lc-page-btn" (click)="loadPage(page() + 1)" [disabled]="page() >= totalPages() - 1">
+            <i class="bi bi-chevron-left"></i>
+          </button>
+        </div>
+      </div>
+    }
+
+  </div>
+</main>
