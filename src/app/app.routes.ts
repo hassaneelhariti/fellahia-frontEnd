@@ -12,9 +12,9 @@ export const routes: Routes = [
     canActivate: [authGuard, roleGuard('FELLAH')],
     loadChildren: () => import('./features/fellah/fellah.routes').then(m => m.FELLAH_ROUTES)
   },
-  // {
-  //   path: 'lawyer',
-  //   canActivate: [authGuard, roleGuard('AVOCAT')],
-  //   loadChildren: () => import('./features/lawyer/lawyer.routes').then(m => m.LAWYER_ROUTES)
-  // }
+  {
+    path: 'lawyer',
+    canActivate: [authGuard, roleGuard('AVOCAT')],
+    loadChildren: () => import('./features/lawyer/lawyer.routes').then(m => m.LAWYER_ROUTES)
+  }
 ];
