@@ -48,7 +48,7 @@
             <span class="fd-stat-card__currency">درهم</span>
             <span class="fd-stat-card__amount">{{ profile()?.balance ? (profile()?.balance | number:'1.2-2') : '12,500.00' }}</span>
           </div>
-          <button class="fd-topup-btn">
+          <button class="fd-topup-btn" routerLink="/fellah/recharge">
             <i class="bi bi-plus-circle"></i>
             تعبئة الرصيد
           </button>

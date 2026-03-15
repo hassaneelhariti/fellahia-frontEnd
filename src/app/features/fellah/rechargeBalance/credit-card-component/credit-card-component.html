@@ -1,0 +1,40 @@
+<div class="section-cc">
+  <div class="form-grid">
+    <div class="field field--full">
+      <label>رقم البطاقة</label>
+      <div class="input-wrap">
+        <input type="text" [ngModel]="cardNumber()" (ngModelChange)="cardNumber.set($event)" placeholder="0000 0000 0000 0000" />
+        <span class="material-symbols-outlined input-icon">credit_card</span>
+      </div>
+    </div>
+    <div class="field">
+      <label>تاريخ الانتهاء (MM/YY)</label>
+      <input type="text" [ngModel]="expiry()" (ngModelChange)="expiry.set($event)" placeholder="MM / YY" />
+    </div>
+    <div class="field">
+      <label>رمز التحقق (CVV)</label>
+      <input type="text" [ngModel]="cvv()" (ngModelChange)="cvv.set($event)" placeholder="123" />
+    </div>
+    <div class="field field--full">
+      <label>المبلغ المراد شحنه</label>
+      <div class="input-wrap">
+        <input type="number" [ngModel]="amount()" (ngModelChange)="amount.set($event)" placeholder="0.00" class="input-amount" />
+        <span class="input-suffix">درهم</span>
+      </div>
+    </div>
+  </div>
+
+  @if (error()) {
+    <div class="error-msg">{{ error() }}</div>
+  }
+
+  <button class="btn-primary" (click)="submit()" [disabled]="loading() || !amount()">
+    @if (loading()) {
+      <span class="material-symbols-outlined spinning">autorenew</span>
+      جاري المعالجة...
+    } @else {
+      <span>تأكيد عملية الشحن</span>
+      <span class="material-symbols-outlined">chevron_left</span>
+    }
+  </button>
+</div>

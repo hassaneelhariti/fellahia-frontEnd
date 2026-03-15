@@ -1,0 +1,75 @@
+<div class="section-bt">
+  <div class="bt-grid">
+
+    <div class="bank-card">
+      <div class="bank-card__header">
+        <span class="material-symbols-outlined">account_balance</span>
+        <h3>بيانات الحساب البنكي</h3>
+      </div>
+      <div class="bank-card__body">
+        <div class="bank-field">
+          <label>اسم البنك</label>
+          <p>البنك الوطني الفلاحي (BNA)</p>
+        </div>
+        <div class="bank-field">
+          <label>اسم صاحب الحساب</label>
+          <p>FellahIA Tech Solutions</p>
+        </div>
+        <div class="bank-field">
+          <label>رقم الحساب (RIB)</label>
+          <div class="copy-row">
+            <code>{{ rib }}</code>
+            <button (click)="copyToClipboard(rib, 'rib')" [class.copied]="copied() === 'rib'">
+              <span class="material-symbols-outlined">{{ copied() === 'rib' ? 'check' : 'content_copy' }}</span>
+            </button>
+          </div>
+        </div>
+        <div class="bank-field">
+          <label>رقم الآيبان (IBAN)</label>
+          <div class="copy-row">
+            <code>{{ iban }}</code>
+            <button (click)="copyToClipboard(iban, 'iban')" [class.copied]="copied() === 'iban'">
+              <span class="material-symbols-outlined">{{ copied() === 'iban' ? 'check' : 'content_copy' }}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="bank-card__footer">
+        تتم معالجة التحويلات خلال 24-48 ساعة عمل.
+      </div>
+    </div>
+
+    <div class="upload-section">
+      <div class="upload-card">
+        <h3>
+          <span class="material-symbols-outlined">cloud_upload</span>
+          إرفاق إيصال التحويل
+        </h3>
+        <div class="upload-zone">
+          <span class="material-symbols-outlined">add_a_photo</span>
+          <p>اضغط هنا أو اسحب الملف لرفعه</p>
+          <span>PNG, JPG أو PDF (بحد أقصى 5MB)</span>
+        </div>
+        <div class="field" style="margin-top: 1rem">
+          <label>قيمة المبلغ المحول (درهم)</label>
+          <input type="number" [ngModel]="amount()" (ngModelChange)="amount.set($event)" placeholder="0.00" />
+        </div>
+      </div>
+
+      @if (error()) {
+        <div class="error-msg">{{ error() }}</div>
+      }
+
+      <button class="btn-primary" (click)="submit()" [disabled]="loading() || !amount()">
+        @if (loading()) {
+          <span class="material-symbols-outlined spinning">autorenew</span>
+          جاري الإرسال...
+        } @else {
+          <span class="material-symbols-outlined">send</span>
+          تأكيد وإرسال الطلب
+        }
+      </button>
+    </div>
+
+  </div>
+</div>

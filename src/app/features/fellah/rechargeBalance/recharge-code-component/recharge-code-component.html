@@ -1,0 +1,35 @@
+<div class="section-rc">
+  <div class="rc-header">
+    <h4>أدخل كود الشحن</h4>
+    <p>أدخل الرمز المكون من 7 أرقام الموجود على قسيمة الشحن</p>
+  </div>
+
+  <div class="rc-input-wrap">
+    <input
+      type="text"
+      maxlength="7"
+      placeholder="· · · · · · ·"
+      class="rc-input"
+      [ngModel]="code()"
+      (ngModelChange)="code.set($event.toUpperCase())"
+    />
+  </div>
+
+  <div class="rc-info">
+    <span class="material-symbols-outlined">info</span>
+    <p>سيتم إضافة الرصيد فوراً بعد التحقق من صحة الكود.</p>
+  </div>
+
+  @if (error()) {
+    <div class="error-msg">{{ error() }}</div>
+  }
+
+  <button class="btn-primary" (click)="submit()" [disabled]="code().length !== 7 || loading()">
+    @if (loading()) {
+      <span class="material-symbols-outlined spinning">autorenew</span>
+      جاري التحقق...
+    } @else {
+      تفعيل الكود الآن
+    }
+  </button>
+</div>

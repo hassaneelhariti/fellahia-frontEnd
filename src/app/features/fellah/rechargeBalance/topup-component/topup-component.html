@@ -1,0 +1,61 @@
+<main class="main">
+  <header class="topbar">
+    <h2>واجهة شحن الرصيد الموحدة</h2>
+    <div class="topbar-actions">
+      <button class="icon-btn">
+        <span class="material-symbols-outlined">notifications</span>
+        <span class="notif-dot"></span>
+      </button>
+      <div class="divider"></div>
+      <span class="balance-text">الرصيد: {{ balance() | number:'1.2-2' }} درهم</span>
+    </div>
+  </header>
+
+  <div class="content">
+    <div class="topup-card">
+
+      <div class="tabs">
+        <button class="tab" [class.tab--active]="activeTab() === 'cc'" (click)="setTab('cc')">
+          <span class="material-symbols-outlined">credit_card</span>
+          بطاقة ائتمان
+        </button>
+        <button class="tab" [class.tab--active]="activeTab() === 'bt'" (click)="setTab('bt')">
+          <span class="material-symbols-outlined">account_balance</span>
+          تحويل بنكي
+        </button>
+        <button class="tab" [class.tab--active]="activeTab() === 'rc'" (click)="setTab('rc')">
+          <span class="material-symbols-outlined">barcode_scanner</span>
+          كود الشحن
+        </button>
+      </div>
+
+      <div class="tab-content">
+        @if (activeTab() === 'cc') {
+          <app-credit-card (topupSuccess)="onTopupSuccess($event)" />
+        }
+        @if (activeTab() === 'bt') {
+          <app-bank-transfer (topupSuccess)="onTopupSuccess($event)" />
+        }
+        @if (activeTab() === 'rc') {
+          <app-recharge-code (topupSuccess)="onTopupSuccess($event)" />
+        }
+      </div>
+
+    </div>
+
+    <footer class="page-footer">
+      <div class="footer-trust">
+        <div class="trust-avatars">
+          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAILNVqx4yRnL5sNbtyOTC5v0DrdtFWCTlI5GNpgdvYpOC9yzF5vyY6da01QAzw85OfWmkTGkVIxdOFn-CBu06HWMiCPGWoO0c1-ZVofPk_ipSAKqtmyDaCsPyuqAs9dVOvNX3DDZAGdBzoPcNkSR79qJOJFzf7Uo0_FpVLGX6ohZI_mYpPB_WQB3UYWdsHOVukvaVUa3NnOPd-NOWEemh5M4_UkExJpi38IKExbdvCANcojG9cDh5ZfOoSp4Up8WsZVI4mhAYpXUH" alt="" />
+          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoU0hujqufPXrCwREje_qNcolPBu7Ha81MifMDIP4uBZWUQfv9G4dQj7Yt8RgRRn7BMnMI2FsjEJhjs05PoZTs_Tj4WeIwcqAJv54BSSXLLWYIubBWSbvFM0P_0Tzl5EC169p3V1ve0E-c9mrtvW2bUGoJuiBYVwjlfigrmy192I4jhJ1e40XPeo1ZZmRYKN1cnIq0ckSp4EjFx0qVlTEI9PVAF2d6CvfDcaloewR5lrPnVMGeWPi7bqBMbAej3r_wIXXJikse4W24" alt="" />
+          <div class="trust-more">+5</div>
+        </div>
+        <p>نظام دفع آمن ومشفر 256-بت</p>
+      </div>
+      <div class="footer-links">
+        <a href="#">سياسة الشحن</a>
+        <a href="#">الدعم الفني</a>
+      </div>
+    </footer>
+  </div>
+</main>

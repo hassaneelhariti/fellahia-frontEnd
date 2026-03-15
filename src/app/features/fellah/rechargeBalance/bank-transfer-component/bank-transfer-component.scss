@@ -1,0 +1,126 @@
+@use '../shared-topup' as *;
+
+$primary: #ec5b13;
+$forest: #1b4332;
+
+.section-bt {
+  .bt-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+
+    @media (max-width: 768px) { grid-template-columns: 1fr; }
+  }
+
+  .bank-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+
+    &__header {
+      background: $forest;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      .material-symbols-outlined { color: $primary; }
+      h3 { color: white; font-size: 0.95rem; font-weight: 700; margin: 0; }
+    }
+
+    &__body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    &__footer {
+      padding: 12px 24px;
+      background: #f8fafc;
+      border-top: 1px solid #f1f5f9;
+      font-size: 0.72rem;
+      color: #64748b;
+    }
+  }
+
+  .bank-field {
+    label {
+      display: block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+
+    p { font-weight: 700; color: #0f172a; margin: 0; font-size: 0.9rem; }
+  }
+
+  .copy-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 10px 14px;
+
+    code { color: $primary; font-weight: 700; font-size: 0.85rem; font-family: monospace; }
+
+    button {
+      background: none;
+      border: none;
+      color: #94a3b8;
+      cursor: pointer;
+      padding: 0;
+      transition: color 0.2s;
+
+      &:hover, &.copied { color: $primary; }
+      .material-symbols-outlined { font-size: 1rem; }
+    }
+  }
+
+  .upload-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .upload-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 24px;
+
+    h3 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin: 0 0 16px;
+      .material-symbols-outlined { color: $primary; font-size: 1.1rem; }
+    }
+  }
+
+  .upload-zone {
+    border: 2px dashed #e2e8f0;
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: #f8fafc;
+    cursor: pointer;
+    transition: border-color 0.2s;
+
+    &:hover { border-color: $primary; }
+
+    .material-symbols-outlined { color: $primary; font-size: 2rem; margin-bottom: 8px; }
+    p { font-size: 0.8rem; font-weight: 700; margin: 0 0 4px; }
+    span { font-size: 0.7rem; color: #64748b; }
+  }
+}
