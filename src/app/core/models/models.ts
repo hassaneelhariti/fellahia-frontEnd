@@ -116,3 +116,12 @@ export interface Pageable {
   size: number;
   sort?: string[];
 }
+export interface TopupRequest {
+  amount: number;
+  method: string;
+}
+
+export interface TopupCodeRequest {
+  code: string;
+  method: string;
+}
